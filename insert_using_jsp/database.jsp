@@ -11,13 +11,26 @@
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
 				integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
 				crossorigin="anonymous"></script>
+				
+				
 			<title>Insert title here</title>
+			<script>
+			  function del(id){
+				  //alert("del:="+id);
+				  window.location.href = "delete.jsp?id="+id;
+			  }
+			  function update(id){
+				  window.location.href="update.jsp?id="+id;
+			  }
+			</script>
 		</head>
 
 		<body>
 			<%
 			
-			try{ Class.forName("com.mysql.cj.jdbc.Driver");
+			try
+			{ 
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			Statement stmt; ResultSet rs; Connection con;
 			String query = "select * from contact";
 			String url = "jdbc:mysql://localhost:3306/demo";
@@ -37,6 +50,7 @@
 					<th>Mobile</th>
 					<th>Age</th>
 					<th>City</th>
+					<th>Action</th>
 
 					<% while(rs.next()){ %>
 
@@ -59,12 +73,13 @@
 							<td>
 								<%=rs.getString(6) %>
 							</td>
+							<td><button type="button" class="btn btn-danger" onclick="del(<%=rs.getInt(1) %>)">Delete</button>
+								<button type="button" class="btn btn-warning" onclick="update(<%=rs.getInt(1) %>)">Update</button>
+							</td>
 						</tr>
-
-
 						<% } %>
 				</table>
-				<% }catch(Exception e){ System.out.print(e); } %>
+				<% }catch(Exception e){System.out.print(e); } %>
 		</body>
 
 		</html>
